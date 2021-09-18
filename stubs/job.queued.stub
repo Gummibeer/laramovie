@@ -1,0 +1,16 @@
+<?php
+
+namespace {{ namespace }};
+
+class {{ class }} extends Job
+{
+    public function __construct()
+    {
+        //
+    }
+
+    public function handle(): void
+    {
+        //
+    }
+}

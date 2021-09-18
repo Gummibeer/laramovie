@@ -30,4 +30,20 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'google' => [
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+        'refresh_token' => env('GOOGLE_REFRESH_TOKEN'),
+    ],
+
+    'tmdb' => [
+        'token' => env('TMDB_TOKEN'),
+    ],
+
+    'trakt' => [
+        'client_id' => env('TRAKT_CLIENT_ID'),
+        'client_secret' => env('TRAKT_CLIENT_SECRET'),
+        'redirect' => '/auth/trakt/callback',
+    ],
+
 ];

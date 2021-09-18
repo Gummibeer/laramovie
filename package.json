@@ -12,5 +12,12 @@
     "devDependencies": {
         "laravel-mix": "^6.0.6",
         "postcss": "^8.1.14"
+    },
+    "dependencies": {
+        "@alpinejs/intersect": "^3.3.3",
+        "@tailwindcss/aspect-ratio": "^0.2.1",
+        "@tailwindcss/forms": "^0.3.3",
+        "alpinejs": "^3.3.3",
+        "tailwindcss": "^2.2.15"
     }
 }
