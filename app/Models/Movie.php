@@ -54,32 +54,6 @@ class Movie extends Model
         'genres' => 'array',
     ];
 
-    public function fillFromTmdb(): self
-    {
-        $data = Http::tmdb()->get(sprintf('movie/%d', $this->id), ['language' => app()->getLocale()])
-            ->throw()
-            ->json();
-
-        return $this->fill([
-            'name' => trim($data['title']),
-            'imdb_id' => $data['imdb_id'] ?: $this->imdb_id,
-            'overview' => $data['overview'] ?: $this->overview,
-            'backdrop_path' => $data['backdrop_path'] ?: $this->backdrop_path,
-            'poster_path' => $data['poster_path'] ?: $this->poster_path,
-            'released_at' => $data['release_date'] ?: $this->released_at,
-            'runtime' => $data['runtime'] ?: $this->runtime,
-            'vote_average' => $data['vote_average'] ?: $this->vote_average ?? 0,
-            'genres' => array_column($data['genres'], 'name'),
-        ]);
-    }
-
-    public function updateFromTmdb(): self
-    {
-        $this->fillFromTmdb()->save();
-
-        return $this;
-    }
-
     public function recommendations(): Collection
     {
         return once(fn () => static::query()

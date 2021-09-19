@@ -3,30 +3,37 @@
 namespace App\Models\Concerns;
 
 use App\Models\Person;
+use App\Workflows\LoadPerson;
 use Staudenmeir\EloquentJsonRelations\Relations\BelongsToJson;
 
 trait HasPeople
 {
     protected function initializeHasPeople(): void
     {
-        $this->withCasts(['person_ids' => 'array']);
+        $this->withCasts(['cast_ids' => 'array']);
     }
 
-    public function people(): BelongsToJson
+    public function cast(): BelongsToJson
     {
-        return $this->belongsToJson(Person::class, 'person_ids');
+        return $this->belongsToJson(Person::class, 'cast_ids');
     }
 
-    public function attachPerson(int $id, string $character): bool
+    public function crew(): BelongsToJson
     {
-        $person = Person::query()->find($id);
+        return $this->belongsToJson(Person::class, 'crew_ids');
+    }
 
-        if ($person === null) {
-            $person = Person::query()
-                ->firstOrNew(['id' => $id])
-                ->updateFromTmdb();
-        }
+    public function attachCast(int $tmdbId): bool
+    {
+        return $this->cast()->attach(
+            Person::query()->find($tmdbId) ?? LoadPerson::run($tmdbId)
+        )->save();
+    }
 
-        return $this->people()->attach($person)->save();
+    public function attachCrew(int $tmdbId): bool
+    {
+        return $this->crew()->attach(
+            Person::query()->find($tmdbId) ?? LoadPerson::run($tmdbId)
+        )->save();
     }
 }

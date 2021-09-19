@@ -10,18 +10,23 @@ return new class() extends Migration {
     {
         Schema::create(Movie::table(), static function (Blueprint $table): void {
             $table->bigInteger('id')->unsigned()->unique();
-            $table->string('gdrive_id')->unique();
-            $table->string('imdb_id')->nullable()->unique();
+            $table->string('disk');
+            $table->string('directory');
             $table->string('name');
-            $table->text('overview')->nullable();
+            $table->string('imdb_id')->nullable()->unique();
+            $table->text('description')->nullable();
             $table->string('backdrop_path')->nullable();
             $table->string('poster_path')->nullable();
             $table->date('released_at')->nullable();
             $table->integer('runtime')->nullable();
             $table->float('vote_average')->default(0);
-            $table->json('genres');
-            $table->jsonb('person_ids')->default('[]');
-            $table->index('person_ids', null, 'gin');
+            $table->json('genres')->default('[]');
+            $table->jsonb('cast_ids')->default('[]');
+            $table->index('cast_ids', null, 'gin');
+            $table->jsonb('crew_ids')->default('[]');
+            $table->index('crew_ids', null, 'gin');
+
+            $table->unique(['disk', 'directory']);
         });
     }
 };

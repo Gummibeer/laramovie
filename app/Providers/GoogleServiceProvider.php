@@ -14,7 +14,7 @@ class GoogleServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        $this->app->bind(Client::class, static function (ContainerContract $app): Client {
+        $this->app->singleton(Client::class, static function (ContainerContract $app): Client {
             /** @var ConfigContract $config */
             $config = $app->make('config');
 
@@ -27,7 +27,7 @@ class GoogleServiceProvider extends ServiceProvider
         });
         $this->app->alias(Client::class, Google_Client::class);
 
-        $this->app->bind(Drive::class, static function (ContainerContract $app): Drive {
+        $this->app->singleton(Drive::class, static function (ContainerContract $app): Drive {
             return new Drive($app->make(Client::class));
         });
         $this->app->alias(Drive::class, Google_Service_Drive::class);

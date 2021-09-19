@@ -23,7 +23,7 @@ class StorageServiceProvider extends ServiceProvider
                 $app->make(Drive::class),
                 $config['root'],
                 [
-                    'useDisplayPaths' => false,
+                    'useDisplayPaths' => $config['useDisplayPaths'] ?? false,
                 ]
             );
 
