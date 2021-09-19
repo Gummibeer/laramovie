@@ -11,6 +11,7 @@ use Carbon\CarbonInterval;
 use Google\Service\Drive;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 use Staudenmeir\EloquentJsonRelations\HasJsonRelationships;
 
 /**
@@ -39,7 +40,6 @@ class Movie extends Model
     use Searchable;
     use HasPoster;
     use HasBackdrop;
-    use HasGdriveFolder;
     use HasPeople;
     use HasJsonRelationships;
 
@@ -98,15 +98,5 @@ class Movie extends Model
             'https://www.imdb.com/title',
             $this->imdb_id
         );
-    }
-
-    public function video_files(): array
-    {
-        return once(fn () => app(Drive::class)->files->listFiles([
-            'pageSize' => 100,
-            'fields' => 'files(id,name,mimeType,videoMediaMetadata,webViewLink)',
-            'spaces' => 'drive',
-            'q' => sprintf('trashed = false and "%s" in parents and mimeType contains "video/"', $this->gdrive_id),
-        ])->getFiles());
     }
 }

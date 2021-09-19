@@ -34,11 +34,6 @@
                             </a>
                         </li>
                         @endif
-                        <li>
-                            <a href="{{ $movie->gdrive_link() }}" target="_blank" class="inline-block bg-blue-500 text-white rounded px-4 py-1.5">
-                                open
-                            </a>
-                        </li>
                         @unless(auth()->user()->hasWatched($movie))
                         <li>
                             <form
@@ -56,11 +51,6 @@
                             </form>
                         </li>
                         @endunless
-                        @foreach($movie->video_files() as $video)
-                        <li>
-                            <x-video-link :video="$video" class="inline-block bg-red-500 text-white rounded px-4 py-1.5"/>
-                        </li>
-                        @endforeach
                     </ul>
                 </div>
             </div>
@@ -76,6 +66,7 @@
                 </div>
             @endif
 
+            @if($movie->cast->isNotEmpty())
             <div class="col-span-full">
                 <h2 class="text-2xl font-bold mb-4">Cast</h2>
                 <div class="grid gap-4 sm:gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6">
@@ -84,7 +75,9 @@
                 @endforeach
                 </div>
             </div>
+            @endif
 
+            @if($movie->crew->isNotEmpty())
             <div class="col-span-full">
                 <h2 class="text-2xl font-bold mb-4">Crew</h2>
                 <div class="grid gap-4 sm:gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6">
@@ -93,6 +86,7 @@
                 @endforeach
                 </div>
             </div>
+            @endif
 
         </div>
     </section>
