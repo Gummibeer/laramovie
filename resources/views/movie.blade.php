@@ -79,7 +79,16 @@
             <div class="col-span-full">
                 <h2 class="text-2xl font-bold mb-4">Cast</h2>
                 <div class="grid gap-4 sm:gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6">
-                @foreach($movie->people as $person)
+                @foreach($movie->cast as $person)
+                    <x-person.preview :person="$person"/>
+                @endforeach
+                </div>
+            </div>
+
+            <div class="col-span-full">
+                <h2 class="text-2xl font-bold mb-4">Crew</h2>
+                <div class="grid gap-4 sm:gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6">
+                @foreach($movie->crew as $person)
                     <x-person.preview :person="$person"/>
                 @endforeach
                 </div>
