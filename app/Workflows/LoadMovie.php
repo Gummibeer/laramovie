@@ -40,14 +40,14 @@ class LoadMovie extends Pipeline
                     [
                         'directory' => $transfer->directory,
                         'name' => $transfer->name,
-                        'description' => $transfer->description,
-                        'released_at' => $transfer->releasedAt,
-                        'imdb_id' => $transfer->imdbId,
-                        'poster_path' => $transfer->posterPath,
-                        'backdrop_path' => $transfer->backdropPath,
-                        'runtime' => $transfer->runtime,
-                        'vote_average' => $transfer->voteAverage,
-                        'genres' => $transfer->genres,
+                        'description' => $transfer->description ?: null,
+                        'released_at' => $transfer->releasedAt ?: null,
+                        'imdb_id' => $transfer->imdbId ?: null,
+                        'poster_path' => $transfer->posterPath ?: null,
+                        'backdrop_path' => $transfer->backdropPath ?: null,
+                        'runtime' => $transfer->runtime ?: null,
+                        'vote_average' => $transfer->voteAverage ?: 0,
+                        'genres' => $transfer->genres ?: [],
                     ]
                 );
 
