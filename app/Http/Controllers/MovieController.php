@@ -17,22 +17,25 @@ class MovieController
 
     public function popular(): ViewContract
     {
-        $movies = Http::tmdb()->get('/movie/popular', ['language' => app()->getLocale(), 'region' => 'DE'])
-            ->throw()
-            ->collect('results')
-            ->reject(fn (array $data) => Movie::query()->whereKey($data['id'])->exists());
+        $movies = $this->mapTmdbCollectionToMovies(
+            Http::tmdb()->get('/movie/popular', ['language' => app()->getLocale(), 'region' => 'DE'])
+                ->throw()
+                ->collect('results')
+        )->reject(fn (Movie $movie) => $movie->exists);
 
         return view('popular', [
-            'movies' => $this->mapTmdbCollectionToMovies($movies),
+            'movies' => $movies,
         ]);
     }
 
     public function recommend(): ViewContract
     {
-        $movies = File::collect(storage_path('app/movies-recommended.json'));
+        $movies = $this->mapTmdbCollectionToMovies(
+            File::collect(storage_path('app/movies-recommended.json'))
+        )->reject(fn (Movie $movie) => $movie->exists);
 
         return view('recommend', [
-            'movies' => $this->mapTmdbCollectionToMovies($movies),
+            'movies' => $movies,
         ]);
     }
 
@@ -68,8 +71,9 @@ class MovieController
     {
         return $results
             ->map(function (array $data): Movie {
-                return new Movie([
+                return Movie::query()->firstOrNew([
                     'id' => $data['id'],
+                ], [
                     'name' => trim($data['title']),
                     'poster_path' => $data['poster_path'] ?: null,
                     'released_at' => $data['release_date'] ?: null,
