@@ -10,7 +10,10 @@ trait HasPeople
 {
     protected function initializeHasPeople(): void
     {
-        $this->withCasts(['cast_ids' => 'array']);
+        $this->withCasts([
+            'cast_ids' => 'array',
+            'crew_ids' => 'array',
+        ]);
     }
 
     public function cast(): BelongsToJson
