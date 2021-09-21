@@ -24,6 +24,7 @@ use Staudenmeir\EloquentJsonRelations\Relations\HasManyJson;
  * @mixin \Illuminate\Database\Eloquent\Builder
  *
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\TvShow[] $tv_shows
+ * @property string|null $description
  */
 class Person extends Model
 {

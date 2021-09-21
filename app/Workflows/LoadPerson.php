@@ -31,9 +31,9 @@ class LoadPerson extends Pipeline
                     ],
                     [
                         'name' => $transfer->name,
-                        'description' => $transfer->description,
-                        'imdb_id' => $transfer->imdbId,
-                        'poster_path' => $transfer->posterPath,
+                        'description' => $transfer->description ?: null,
+                        'imdb_id' => $transfer->imdbId ?: null,
+                        'poster_path' => $transfer->posterPath ?: null,
                     ]
                 );
             });

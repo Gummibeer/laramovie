@@ -43,9 +43,21 @@ class SearchMovie implements Pipe
         }
 
         $match = collect([
-            $results->filter(fn (array $result): bool => $result['original_title'] === $payload->name && $result['title'] === $payload->nam),
-            $results->filter(fn (array $result): bool => $result['original_title'] === $payload->name),
-            $results->filter(fn (array $result): bool => $result['title'] === $payload->name),
+            $results
+                ->filter(fn (array $result): bool => $result['original_title'] === $payload->name && $result['title'] === $payload->nam),
+            $results
+                ->filter(fn (array $result): bool => $result['original_title'] === $payload->name),
+            $results
+                ->filter(fn (array $result): bool => $result['title'] === $payload->name),
+            $results
+                ->filter(fn (array $result): bool => Carbon::make($result['released_at'])?->year === $payload->year)
+                ->filter(fn (array $result): bool => $result['original_title'] === $payload->name && $result['title'] === $payload->nam),
+            $results
+                ->filter(fn (array $result): bool => Carbon::make($result['released_at'])?->year === $payload->year)
+                ->filter(fn (array $result): bool => $result['original_title'] === $payload->name),
+            $results
+                ->filter(fn (array $result): bool => Carbon::make($result['released_at'])?->year === $payload->year)
+                ->filter(fn (array $result): bool => $result['title'] === $payload->name),
         ])->first(fn (Collection $set): bool => $set->count() === 1)->first();
 
         if (is_array($match)) {

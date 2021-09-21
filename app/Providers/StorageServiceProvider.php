@@ -2,13 +2,16 @@
 
 namespace App\Providers;
 
+use App\Flysystem\CachedAdapter;
+use App\Flysystem\GoogleDriveAdapter;
+use Carbon\CarbonInterval;
 use Google\Service\Drive;
 use Illuminate\Contracts\Container\Container as ContainerContract;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\ServiceProvider;
+use League\Flysystem\Config;
 use League\Flysystem\Filesystem;
 use League\Flysystem\FilesystemInterface;
-use Masbug\Flysystem\GoogleDriveAdapter;
 
 class StorageServiceProvider extends ServiceProvider
 {
@@ -27,7 +30,18 @@ class StorageServiceProvider extends ServiceProvider
                 ]
             );
 
-            return new Filesystem($adapter);
+            $cached = new CachedAdapter(
+                $adapter,
+                cache()->store(),
+                CarbonInterval::hour()
+            );
+
+            return new Filesystem(
+                $cached,
+                new Config([
+                    'disable_asserts' => true,
+                ])
+            );
         });
     }
 }

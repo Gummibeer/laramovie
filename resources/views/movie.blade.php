@@ -17,8 +17,8 @@
                     </ul>
                     <ul class="flex flex-row space-x-4 text-gray-400">
                         <li>{{ $movie->runtime()?->forHumans(short: true) }}</li>
-                        <li>{{ $movie->released_at?->format('d.m.Y') }}</li>
-                        <li>★ {{ number_format($movie->vote_average, 1, ',') }}</li>
+                        <li>{{ $movie->released_at?->format('Y') }}</li>
+                        <li>★ {{ number_format($movie->vote_average, 1, ',') }} / 10</li>
                     </ul>
                     <p>{{ $movie->overview }}</p>
                     <ul class="flex flex-row space-x-4">
@@ -51,6 +51,13 @@
                             </form>
                         </li>
                         @endunless
+                        @foreach($movie->videos() as $video)
+                            <li>
+                                <a href="{{ $video['link'] }}" target="_blank" class="inline-block bg-green-500 text-white rounded px-4 py-1.5">
+                                    ⤓ {{ $video['video_format'] }} ({{ number_format(\RyanChandler\Bytes\Converter::from($video['size'])->toGiB(), 2, ',') }}GB)
+                                </a>
+                            </li>
+                        @endforeach
                     </ul>
                 </div>
             </div>

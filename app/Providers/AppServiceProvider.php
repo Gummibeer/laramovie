@@ -2,17 +2,20 @@
 
 namespace App\Providers;
 
-use App\Actions\LoadMovieFromGdrive;
-use App\Actions\LoadMovieFromTmdb;
+use Carbon\Carbon;
+use Illuminate\Contracts\Filesystem\Filesystem as FilesystemContract;
 use finfo;
+use Illuminate\Contracts\Routing\ResponseFactory as ResponseFactoryContract;
 use Illuminate\Http\Client\Factory;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Illuminate\Support\Stringable;
+use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -73,6 +76,31 @@ class AppServiceProvider extends ServiceProvider
             $type = (new finfo(FILEINFO_MIME))->buffer($data);
 
             return 'data:'.$type.';base64,'.base64_encode($data);
+        });
+
+        Response::macro('storageStream', function (FilesystemContract $disk, string $filepath, array $headers = []) {
+            /** @var ResponseFactoryContract $this */
+            abort_unless($disk->exists($filepath), SymfonyResponse::HTTP_NOT_FOUND);
+
+            $mimeType = $disk->mimeType($filepath);
+            $fullSize = $disk->size($filepath);
+            $size = $fullSize;
+            $lastModifiedAt = Carbon::createFromTimestamp($disk->lastModified($filepath));
+
+            $stream = $disk->readStream($filepath);
+
+            $headers = array_merge([
+                'Content-Type' => $mimeType,
+                'Content-Length' => $size,
+                'Content-Disposition' => sprintf('attachment; filename="%s"', basename($filepath)),
+                'Last-Modified' => $lastModifiedAt->toRfc7231String(),
+            ], $headers);
+
+            return $this->stream(
+                fn () => fpassthru($stream),
+                SymfonyResponse::HTTP_OK,
+                $headers
+            );
         });
     }
 }

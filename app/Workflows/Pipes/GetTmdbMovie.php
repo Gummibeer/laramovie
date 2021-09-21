@@ -20,7 +20,7 @@ class GetTmdbMovie implements Pipe
     public function handle($payload, Closure $next): mixed
     {
         if (! $payload->tmdbId) {
-            throw new TmdbIdMissingException();
+            throw TmdbIdMissingException::movie($payload);
         }
 
         $result = Http::tmdb()

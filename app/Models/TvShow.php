@@ -32,6 +32,7 @@ use Staudenmeir\EloquentJsonRelations\HasJsonRelationships;
  *
  * @property-read Collection|\App\Models\Person[] $people
  * @property-read Collection|\App\Models\Season[] $seasons
+ * @property string $person_ids
  */
 class TvShow extends Model
 {

@@ -5,7 +5,7 @@ namespace App\Workflows\Dtos;
 /**
  * @see \App\Models\Person
  */
-class PersonTransfer extends Transfer
+class PersonTransfer
 {
     public function __construct(
         public ?string $name = null,
