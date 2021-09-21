@@ -51,10 +51,6 @@ class LoadMovie extends Pipeline
                     ]
                 );
 
-                if (! $movie->disk()->exists($movie->directory.'/tmdbid.txt')) {
-                    $movie->disk()->put($movie->directory.'/tmdbid.txt', $movie->id);
-                }
-
                 foreach ($transfer->cast as $castId) {
                     rescue(fn () => $movie->attachCast($castId));
                 }
