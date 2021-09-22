@@ -33,7 +33,7 @@ class StorageServiceProvider extends ServiceProvider
             $cached = new CachedAdapter(
                 $adapter,
                 cache()->store(),
-                CarbonInterval::hour()
+                CarbonInterval::minutes(30)
             );
 
             return new Filesystem(

@@ -27,7 +27,7 @@ class CheckTmdbidFile implements Pipe
         );
 
         if (Storage::disk($payload->disk)->exists($path)) {
-            $payload->tmdbId = Storage::disk($payload->disk)->get($path);
+            $payload->tmdbId = (int) trim(Storage::disk($payload->disk)->get($path)) ?: null;
         }
 
         return $next($payload);
