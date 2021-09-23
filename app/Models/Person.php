@@ -62,7 +62,7 @@ class Person extends Model
 
     public function movies(): HasManyJson
     {
-        return $this->hasManyJson(Movie::class, 'person_ids');
+        return $this->hasManyJson(Movie::class, 'cast_ids');
     }
 
     public function tv_shows(): HasManyJson
