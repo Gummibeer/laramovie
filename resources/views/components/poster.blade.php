@@ -1,7 +1,7 @@
 @props(['src' => null, 'alt' => null, 'model' => null])
 
 @isset($model)
-    @php($src = $model->poster())
+    @php($src = $model->poster()->url())
     @php($alt = $model->name)
 @endisset
 

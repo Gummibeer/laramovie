@@ -7,15 +7,13 @@
     "require": {
         "php": "^8.0",
         "ext-fileinfo": "*",
+        "astrotomic/laravel-tmdb": "dev-main",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.54",
         "loilo/fuse": "^6.4",
-        "masbug/flysystem-google-drive-ext": "^1.0",
         "ryangjchandler/bytes": "^0.1.0",
         "socialiteproviders/trakt": "^4.1",
-        "spatie/once": "^3.0",
-        "staudenmeir/eloquent-json-relations": "^1.1",
         "tightenco/ziggy": "^1.4"
     },
     "require-dev": {

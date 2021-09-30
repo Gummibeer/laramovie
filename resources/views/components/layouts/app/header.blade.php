@@ -14,7 +14,7 @@
                             @mouseenter="open = true"
                         >
                             <span>Movies</span>
-                            <aside class="text-gray-400 ml-1">({{ \App\Models\Movie::count() }})</aside>
+                            <aside class="text-gray-400 ml-1">({{ \App\Models\OwnedMovie::query()->distinct('movie_id')->count() }})</aside>
                         </a>
 
                         <div class="absolute z-10 mt-3 px-2 w-screen max-w-xs sm:px-0" x-show="open" x-transition>
@@ -35,17 +35,6 @@
                         </div>
                     </div>
                     <a
-                        href="{{ route('app.tvshow.index') }}"
-                        @class([
-                            'inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium',
-                            'border-indigo-500 text-gray-900' => request()->is('app/tv-show', 'app/tv-show/*'),
-                            'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700' => !request()->is('app/tv-show', 'app/tv-show/*'),
-                        ])
-                    >
-                        <span>TV Shows</span>
-                        <aside class="text-gray-400 ml-1">({{ \App\Models\TvShow::count() }})</aside>
-                    </a>
-                    <a
                         href="{{ route('app.person.index') }}"
                         @class([
                             'inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium',
@@ -54,7 +43,7 @@
                         ])
                     >
                         <span>People</span>
-                        <aside class="text-gray-400 ml-1">({{ \App\Models\Person::count() }})</aside>
+                        <aside class="text-gray-400 ml-1">({{ \Astrotomic\Tmdb\Models\Person::count() }})</aside>
                     </a>
                 </div>
             </div>
@@ -145,18 +134,7 @@
                 ])
             >
                 <span>Movies</span>
-                <aside class="text-gray-400 ml-1">({{ \App\Models\Movie::count() }})</aside>
-            </a>
-            <a
-                href="{{ route('app.tvshow.index') }}"
-                @class([
-                    'flex pl-3 pr-4 py-2 border-l-4 text-base font-medium',
-                    'border-indigo-500 text-gray-900' => request()->is('app/tv-show', 'app/tv-show/*'),
-                    'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700' => !request()->is('app/tv-show', 'app/tv-show/*'),
-                ])
-            >
-                <span>TV Shows</span>
-                <aside class="text-gray-400 ml-1">({{ \App\Models\TvShow::count() }})</aside>
+                <aside class="text-gray-400 ml-1">({{ \App\Models\OwnedMovie::query()->distinct('movie_id')->count() }})</aside>
             </a>
             <a
                 href="{{ route('app.person.index') }}"
@@ -167,7 +145,7 @@
                 ])
             >
                 <span>People</span>
-                <aside class="text-gray-400 ml-1">({{ \App\Models\Person::count() }})</aside>
+                <aside class="text-gray-400 ml-1">({{ \Astrotomic\Tmdb\Models\Person::count() }})</aside>
             </a>
         </div>
     </div>

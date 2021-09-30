@@ -14,4 +14,9 @@ abstract class Model extends \Illuminate\Database\Eloquent\Model
     {
         return (new static())->getTable();
     }
+
+    public static function qualifiedColumn(string $column): string
+    {
+        return (new static())->qualifyColumn($column);
+    }
 }
