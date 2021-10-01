@@ -22,9 +22,9 @@ class MovieController
                     ->from(OwnedMovie::table())
                     ->whereColumn(OwnedMovie::qualifiedColumn('movie_id'), Movie::qualifiedColumn('id'));
             })
-            ->orderBy('title')
             ->get()
             ->groupBy(fn (Movie $movie): string => Str::firstAlpha($movie->title))
+            ->sortBy(fn ($_, string $key) => $key)
             ->map(fn (Collection $movies) => MovieResource::collection(
                 $movies->sortBy(fn (Movie $movie) => Str::ascii($movie->title))
             ));
