@@ -1,5 +1,6 @@
 <?php
 
+use Astrotomic\Tmdb\Models\Collection;
 use Astrotomic\Tmdb\Models\Movie;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -8,7 +9,7 @@ use Illuminate\Support\Facades\Schema;
 return new class() extends Migration {
     public function up(): void
     {
-        Schema::create(Movie::table(), static function (Blueprint $table): void {
+        Schema::connection(Movie::connection())->create(Movie::table(), static function (Blueprint $table): void {
             $table->bigInteger('id')->unsigned()->primary();
 
             $table->boolean('adult')->default(false);
@@ -27,6 +28,7 @@ return new class() extends Migration {
             $table->json('production_countries')->nullable();
             $table->json('spoken_languages')->nullable();
             $table->string('status')->nullable();
+            $table->foreignId('collection_id')->nullable()->constrained(Collection::table());
 
             $table->json('title')->nullable();
             $table->json('tagline')->nullable();
@@ -40,6 +42,6 @@ return new class() extends Migration {
 
     public function down(): void
     {
-        Schema::dropIfExists(Movie::table());
+        Schema::connection(Movie::connection())->dropIfExists(Movie::table());
     }
 };
