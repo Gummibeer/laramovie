@@ -21,6 +21,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|OwnedMovie newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|OwnedMovie newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|OwnedMovie query()
+ *
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
 class OwnedMovie extends Model

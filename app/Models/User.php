@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Http;
  * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User query()
+ *
  * @mixin \Illuminate\Database\Eloquent\Builder
  *
  * @property array $watched_movie_ids
