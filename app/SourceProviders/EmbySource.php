@@ -6,6 +6,7 @@ use App\SourceProviders\Contracts\Source;
 use App\SourceProviders\Transfers\MovieTransfer;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
+use RuntimeException;
 
 class EmbySource implements Source
 {
@@ -24,17 +25,18 @@ class EmbySource implements Source
             ->get('emby/Items', [
                 'Recursive' => 'true',
                 'IncludeItemTypes' => 'Movie',
+                'HasTmdbId' => true,
                 'Fields' => 'ProviderIds,MediaStreams',
                 'api_key' => $this->apiKey,
             ])
             ->throw()
             ->collect('Items')
-            ->filter(fn (array $movie): bool => data_get($movie, 'ProviderIds.Tmdb'))
+            ->filter(fn (array $movie): bool => filled(data_get($movie, 'ProviderIds.Tmdb')))
             ->map(function (array $movie): MovieTransfer {
                 $streams = collect($movie['MediaStreams']);
 
                 if ($streams->isEmpty()) {
-                    throw new \Exception(sprintf(
+                    throw new RuntimeException(sprintf(
                         'Movie without streams: [%s]#%s',
                         $movie['ServerId'],
                         $movie['Id']
