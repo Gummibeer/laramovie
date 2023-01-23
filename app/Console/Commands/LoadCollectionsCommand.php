@@ -12,14 +12,9 @@ class LoadCollectionsCommand extends Command
     {
         $collections = Collection::all();
 
-        $bar = $this->startProgressBar($collections->count());
-
-        $collections->each(fn (Collection $collection) => tap(
-            $collection->movies()->all(),
-            fn () => $bar->advance()
-        ));
-
-        $bar->finish();
+        $this->withProgressBar($collections, static function (Collection $collection): void {
+            rescue(fn () => $collection->movies()->all());
+        });
 
         return self::SUCCESS;
     }

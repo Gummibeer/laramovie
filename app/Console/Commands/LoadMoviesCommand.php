@@ -2,37 +2,19 @@
 
 namespace App\Console\Commands;
 
-use App\Models\OwnedMovie;
-use App\SourceProviders\SourceManager;
-use App\SourceProviders\Transfers\MovieTransfer;
 use Astrotomic\Tmdb\Models\Movie;
 
 class LoadMoviesCommand extends Command
 {
     protected $signature = 'movie:load';
 
-    public function handle(SourceManager $manager): int
+    public function handle(): int
     {
-        $movies = $manager->driver()->movies();
+        $movies = Movie::all();
 
-        $bar = $this->startProgressBar($movies->count());
-
-        $movies->each(fn (MovieTransfer $transfer) => tap(
-            rescue(fn () => OwnedMovie::query()->updateOrCreate(
-                [
-                    'source' => $transfer->source,
-                    'source_id' => $transfer->sourceId,
-                ],
-                [
-                    'movie_id' => Movie::query()->findOrFail($transfer->tmdbId)->id,
-                    'width' => $transfer->width,
-                    'height' => $transfer->height,
-                ]
-            )),
-            fn () => $bar->advance()
-        ));
-
-        $bar->finish();
+        $this->withProgressBar($movies, static function (Movie $movie): void {
+            rescue(fn () => $movie->updateFromTmdb());
+        });
 
         return self::SUCCESS;
     }

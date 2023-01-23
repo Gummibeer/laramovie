@@ -7,7 +7,6 @@ use App\SourceProviders\SourceManager;
 use App\SourceProviders\Transfers\MovieTransfer;
 use Astrotomic\Tmdb\Models\Movie;
 use Illuminate\Console\Command;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class LoadOwnedMoviesCommand extends Command
 {
@@ -21,19 +20,14 @@ class LoadOwnedMoviesCommand extends Command
         $movies = $source->movies();
 
         $this->withProgressBar($movies, static function (MovieTransfer $transfer): void {
-            try {
-                Movie::findOrFail($transfer->tmdbId);
-
-                OwnedMovie::query()->updateOrCreate([
-                    'source' => $transfer->source,
-                    'source_id' => $transfer->sourceId,
-                ], [
-                    'movie_id' => $transfer->tmdbId,
-                    'width' => $transfer->width,
-                    'height' => $transfer->height,
-                ]);
-            } catch (ModelNotFoundException) {
-            }
+            rescue(fn () => OwnedMovie::query()->updateOrCreate([
+                'source' => $transfer->source,
+                'source_id' => $transfer->sourceId,
+            ], [
+                'movie_id' => Movie::query()->findOrFail($transfer->tmdbId)->id,
+                'width' => $transfer->width,
+                'height' => $transfer->height,
+            ]));
         });
 
         OwnedMovie::query()

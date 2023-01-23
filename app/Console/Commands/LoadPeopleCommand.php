@@ -12,14 +12,9 @@ class LoadPeopleCommand extends Command
     {
         $movies = Movie::all();
 
-        $bar = $this->startProgressBar($movies->count());
-
-        $movies->each(fn (Movie $movie) => tap(
-            rescue(fn () => $movie->credits()->all()),
-            fn () => $bar->advance()
-        ));
-
-        $bar->finish();
+        $this->withProgressBar($movies, static function (Movie $movie): void {
+            rescue(fn () => $movie->credits()->all());
+        });
 
         return self::SUCCESS;
     }
