@@ -7,6 +7,7 @@ use App\SourceProviders\Transfers\MovieTransfer;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 use RuntimeException;
+use Throwable;
 
 class EmbySource implements Source
 {
@@ -43,13 +44,21 @@ class EmbySource implements Source
                     ));
                 }
 
-                return new MovieTransfer(
-                    source: $this->source,
-                    sourceId: $movie['Id'],
-                    tmdbId: $movie['ProviderIds']['Tmdb'],
-                    width: $streams->pluck('Width')->filter()->first(),
-                    height: $streams->pluck('Height')->filter()->first(),
-                );
+                try {
+                    return new MovieTransfer(
+                        source: $this->source,
+                        sourceId: $movie['Id'],
+                        tmdbId: $movie['ProviderIds']['Tmdb'],
+                        width: $streams->pluck('Width')->filter()->first(),
+                        height: $streams->pluck('Height')->filter()->first(),
+                    );
+                } catch (Throwable $ex) {
+                    throw new RuntimeException(sprintf(
+                        'Movie unprocessable: [%s]#%s',
+                        $movie['ServerId'],
+                        $movie['Id']
+                    ), $ex->getCode(), $ex);
+                }
             });
     }
 
