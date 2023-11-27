@@ -8,20 +8,20 @@
         "php": "^8.0",
         "ext-fileinfo": "*",
         "astrotomic/laravel-tmdb": "dev-main",
-        "fruitcake/laravel-cors": "^2.0",
-        "guzzlehttp/guzzle": "^7.0.1",
-        "laravel/framework": "^8.54",
-        "loilo/fuse": "^6.4",
+        "fruitcake/laravel-cors": "^2.2",
+        "guzzlehttp/guzzle": "^7.8.0",
+        "laravel/framework": "^8.83.27",
+        "loilo/fuse": "^6.6.5",
         "ryangjchandler/bytes": "^0.1.0",
         "socialiteproviders/trakt": "^4.1",
-        "tightenco/ziggy": "^1.4"
+        "tightenco/ziggy": "^1.8.1"
     },
     "require-dev": {
-        "barryvdh/laravel-ide-helper": "^2.10",
-        "facade/ignition": "^2.5",
-        "friendsofphp/php-cs-fixer": "^3.0",
-        "nunomaduro/collision": "^5.0",
-        "spatie/laravel-ray": "^1.25"
+        "barryvdh/laravel-ide-helper": "^2.13",
+        "facade/ignition": "^2.17.7",
+        "laravel/pint": "^1.13.6",
+        "nunomaduro/collision": "^5.11",
+        "spatie/laravel-ray": "^1.33"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
@@ -66,7 +66,7 @@
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
         ],
-        "fix": "vendor/bin/php-cs-fixer fix --using-cache=no",
+        "fix": "@php vendor/bin/pint",
         "ide": [
             "@php artisan ide-helper:eloquent --ansi --no-interaction --quiet",
             "@php artisan ide-helper:generate --ansi --no-interaction --quiet",

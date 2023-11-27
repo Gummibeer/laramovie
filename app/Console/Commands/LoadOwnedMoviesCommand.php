@@ -11,6 +11,7 @@ use Illuminate\Console\Command;
 class LoadOwnedMoviesCommand extends Command
 {
     protected $signature = 'owned-movie:load {source?}';
+
     protected $description = 'Command description';
 
     public function handle(SourceManager $manager): int

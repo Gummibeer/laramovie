@@ -3,8 +3,8 @@
 namespace App\Providers;
 
 use Carbon\Carbon;
-use Illuminate\Contracts\Filesystem\Filesystem as FilesystemContract;
 use finfo;
+use Illuminate\Contracts\Filesystem\Filesystem as FilesystemContract;
 use Illuminate\Contracts\Routing\ResponseFactory as ResponseFactoryContract;
 use Illuminate\Http\Client\Factory;
 use Illuminate\Http\Client\PendingRequest;
