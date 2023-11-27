@@ -34,10 +34,6 @@ class Kernel extends ConsoleKernel
         $schedule->command(LoadPeopleCommand::class)->daily()
             ->runInBackground()
             ->withoutOverlapping();
-
-        $schedule->command(LoadPeopleCreditsCommand::class)->weekly()
-            ->runInBackground()
-            ->withoutOverlapping();
     }
 
     protected function commands(): void
