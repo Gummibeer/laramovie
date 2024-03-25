@@ -2,7 +2,7 @@
 
 @isset($model)
     @php($src = $model->poster()->url())
-    @php($alt = $model->name)
+    @php($alt = $model->title ?? $model->name)
 @endisset
 
 <div {{ $attributes->merge(['class' => 'aspect-w-2 aspect-h-3']) }}>

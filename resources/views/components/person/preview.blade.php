@@ -1,15 +1,20 @@
-@props(['person'])
+@props(['credit'])
 
 <article class="flex flex-col bg-white rounded shadow-lg pb-2">
-    <a href="{{ route('app.person.show', $person->id) }}" title="{{ $person->name }}">
-        <x-poster :model="$person" class="rounded-t"/>
+    <a href="{{ route('app.person.show', $credit->person->id) }}" title="{{ $credit->person->name }}">
+        <x-poster :model="$credit->person" class="rounded-t"/>
     </a>
-    <a href="{{ route('app.person.show', $person) }}" class="truncate px-2 font-bold mt-1" title="{{ $person->name }}">
-        {{ $person->name }}
+    <a href="{{ route('app.person.show', $credit->person) }}" class="truncate px-2 font-bold mt-1" title="{{ $credit->person->name }}">
+        {{ $credit->person->name }}
     </a>
-    @if($person->role)
-    <span class="truncate px-2" title="{{ $person->role->character }}">
-        {{ $person->role->character }}
+    @if($credit->character)
+    <span class="truncate px-2" title="{{ $credit->character }}">
+        {{ $credit->character }}
+    </span>
+    @endif
+    @if($credit->job)
+    <span class="truncate px-2" title="{{ $credit->job }}">
+        {{ $credit->job }}
     </span>
     @endif
 </article>
