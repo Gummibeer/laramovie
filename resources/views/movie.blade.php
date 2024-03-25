@@ -17,24 +17,24 @@
                     </ul>
                     <ul class="flex flex-row space-x-4 text-gray-400">
                         <li>{{ $movie->runtime()?->forHumans(short: true) }}</li>
-                        <li>{{ $movie->released_at?->format('Y') }}</li>
+                        <li>{{ $movie->release_date?->format('Y') }}</li>
                         <li>★ {{ number_format($movie->vote_average, 1, ',') }} / 10</li>
                     </ul>
                     <p>{{ $movie->overview }}</p>
                     <ul class="flex flex-row space-x-4">
                         <li>
-                            <a href="{{ $movie->tmdb_link() }}" target="_blank" class="inline-block bg-green-500 text-white rounded px-4 py-1.5">
+                            <a href="https://www.themoviedb.org/movie/{{ $movie->id }}" target="_blank" class="inline-block bg-green-500 text-white rounded px-4 py-1.5">
                                 TMDB
                             </a>
                         </li>
-                        @if($movie->imdb_link())
+                        @if($movie->imdb_id)
                         <li>
-                            <a href="{{ $movie->imdb_link() }}" target="_blank" class="inline-block bg-yellow-500 text-white rounded px-4 py-1.5">
+                            <a href="https://www.imdb.com/title/{{ $movie->imdb_id }}" target="_blank" class="inline-block bg-yellow-500 text-white rounded px-4 py-1.5">
                                 IMDB
                             </a>
                         </li>
                         @endif
-                        @unless(auth()->user()->hasWatched($movie))
+                        @unless(false && auth()->user()->hasWatched($movie))
                         <li>
                             <form
                                 action="{{ route('api.movie.watch', $movie) }}"
@@ -62,11 +62,11 @@
                 </div>
             </div>
 
-            @if($movie->recommendations()->isNotEmpty())
+            @if($movie->recommendations(18)->isNotEmpty())
                 <div class="col-span-full">
                     <h2 class="text-2xl font-bold mb-4">Similar Movies</h2>
                     <div class="grid gap-4 sm:gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6">
-                        @foreach($movie->recommendations() as $recommendation)
+                        @foreach($movie->recommendations(18) as $recommendation)
                             <x-movie.preview :movie="$recommendation"/>
                         @endforeach
                     </div>
