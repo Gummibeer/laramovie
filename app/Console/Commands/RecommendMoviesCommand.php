@@ -24,7 +24,9 @@ class RecommendMoviesCommand extends Command
         $recommendations = OwnedMovie::query()
             ->cursor()
             ->map(static function (OwnedMovie $movie) use ($bar): Collection {
-                $movies = $movie->movie->recommendations(18);
+                $movies = collect()
+                    ->concat($movie->movie->recommendations(18))
+                    ->concat($movie->movie->collection->movies);
 
                 $bar->advance();
 
