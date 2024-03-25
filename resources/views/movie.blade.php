@@ -54,7 +54,7 @@
                         @foreach($movie->videos() as $video)
                             <li>
                                 <a href="{{ $video['link'] }}" target="_blank" class="inline-block bg-green-500 text-white rounded px-4 py-1.5">
-                                    ⤓ {{ $video['video_format'] }} ({{ number_format(\RyanChandler\Bytes\Converter::from($video['size'])->toGiB(), 2, ',') }}GB)
+                                    ⤓ {{ $video['video_format'] }} ({{ number_format(\App\Converter::from($video['size'])->toGiB(), 2, ',') }}GB)
                                 </a>
                             </li>
                         @endforeach
