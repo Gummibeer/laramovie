@@ -26,7 +26,7 @@ class EmbySource implements Source
             ->get('emby/Items', [
                 'Recursive' => 'true',
                 'IncludeItemTypes' => 'Movie',
-                'HasTmdbId' => true,
+                'HasTmdbId' => 'true',
                 'Fields' => 'ProviderIds,MediaStreams',
                 'api_key' => $this->apiKey,
             ])
