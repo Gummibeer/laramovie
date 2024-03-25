@@ -1,4 +1,4 @@
-@props(['image', 'size' => null])
+@props(['image', 'size' => 780])
 
 <div {{ $attributes->merge(['class' => 'aspect-w-2 aspect-h-3']) }}>
     <img
