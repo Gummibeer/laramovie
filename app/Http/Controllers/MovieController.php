@@ -18,6 +18,7 @@ class MovieController
     {
         return view('movie', [
             'movie' => $movie,
+            'videos' => OwnedMovie::query()->where('movie_id', $movie->id)->get(),
         ]);
     }
 

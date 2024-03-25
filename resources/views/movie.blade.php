@@ -34,13 +34,13 @@
                             </a>
                         </li>
                         @endif
-                        @foreach($movie->videos() as $video)
+                        @foreach($videos as $video)
                             <li>
-                                <a href="{{ $video['link'] }}" target="_blank" class="inline-block bg-green-500 text-white rounded px-4 py-1.5">
-                                    ⤓ {{ $video['video_format'] }} ({{ number_format(\App\Converter::from($video['size'])->toGiB(), 2, ',') }}GB)
+                                <a href="{{ $video->url() }}" target="_blank" class="inline-block bg-green-500 text-white rounded px-4 py-1.5">
+                                    {{ $video->width }}x{{ $video->height }}
                                 </a>
                             </li>
-                        @endforeach
+                        @endforeach()
                     </ul>
                 </div>
             </div>
