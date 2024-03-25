@@ -9,10 +9,10 @@
 
             <div class="md:col-span-2 lg:col-span-3">
                 <div class="space-y-4 bg-white rounded p-4 md:p-8 shadow-lg">
-                    <h1 class="text-3xl font-bold">{{ $movie->name }}</h1>
+                    <h1 class="text-3xl font-bold">{{ $movie->title }}</h1>
                     <ul class="flex flex-row space-x-4">
                         @foreach($movie->genres as $genre)
-                            <li>{{ $genre }}</li>
+                            <li>{{ $genre->name }}</li>
                         @endforeach
                     </ul>
                     <ul class="flex flex-row space-x-4 text-gray-400">
