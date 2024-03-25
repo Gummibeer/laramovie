@@ -63,8 +63,13 @@
                             x-bind:title="tvShow.name"
                             class="px-4 py-2 flex flex-row items-center space-x-3 hover:bg-gray-100 group"
                         >
-                            <div class="w-8 flex-none">
-                                <x-poster class="rounded" src="" alt="" x-bind:src="tvShow.poster" x-bind:alt="tvShow.name"/>
+                            <div class="w-8 flex-none aspect-w-2 aspect-h-3">
+                                <img
+                                    x-bind:src="tvShow.poster"
+                                    x-bind:alt="tvShow.name"
+                                    loading="lazy"
+                                    class="rounded w-full h-full object-center object-cover overflow-hidden"
+                                />
                             </div>
                             <div class="flex-shrink">
                                 <p class="text-sm font-medium text-gray-900 group-hover:text-indigo-500 truncate max-w-xs" x-text="tvShow.name"></p>
@@ -83,8 +88,13 @@
                             x-bind:title="person.name"
                             class="px-4 py-2 flex flex-row items-center space-x-3 hover:bg-gray-100 group"
                         >
-                            <div class="w-8 flex-none">
-                                <x-poster class="rounded" src="" alt="" x-bind:src="person.poster" x-bind:alt="person.name"/>
+                            <div class="w-8 flex-none aspect-w-2 aspect-h-3">
+                                <img
+                                    x-bind:src="person.poster"
+                                    x-bind:alt="person.name"
+                                    loading="lazy"
+                                    class="rounded w-full h-full object-center object-cover overflow-hidden"
+                                />
                             </div>
                             <div class="flex-shrink">
                                 <p class="text-sm font-medium text-gray-900 group-hover:text-indigo-500 truncate max-w-xs" x-text="person.name"></p>
