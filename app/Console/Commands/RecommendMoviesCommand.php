@@ -20,12 +20,11 @@ class RecommendMoviesCommand extends Command
         $bar->maxSecondsBetweenRedraws(1);
         $bar->start();
 
-        $min = 0;
         $recommendations = OwnedMovie::query()
             ->cursor()
             ->map(static function (OwnedMovie $movie) use ($bar): Collection {
                 $movies = collect()
-                    ->concat(rescue(fn () => $movie->movie->recommendations(18)) ?? [])
+                    ->concat(rescue(fn () => $movie->movie->recommendations(36)) ?? [])
                     ->concat(rescue(fn () => $movie->movie->collection?->movies) ?? []);
 
                 $bar->advance();
@@ -36,10 +35,6 @@ class RecommendMoviesCommand extends Command
             ->countBy('id')
             ->collect()
             ->reject(fn (int $count, int $id) => OwnedMovie::query()->where('movie_id', $id)->exists())
-            ->tap(function (Collection $collection) use (&$min): void {
-                $min = $collection->max() / 2;
-            })
-            ->reject(fn (int $count) => $count < $min)
             ->sortDesc()
             ->keys();
 
