@@ -66,7 +66,9 @@ class MovieController
     {
         $movies = Movie::query()->findMany(
             ids: File::collect(storage_path('app/movies-recommended.json'))
-        )->reject(fn (Movie $movie) => OwnedMovie::query()->where('movie_id', $movie->id)->exists());
+        )
+            ->reject(fn (Movie $movie) => OwnedMovie::query()->where('movie_id', $movie->id)->exists())
+            ->take(120);
 
         return view('recommend', [
             'movies' => $movies,
