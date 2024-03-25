@@ -37,7 +37,7 @@
                         @foreach($videos as $video)
                             <li>
                                 <a href="{{ $video->url() }}" target="_blank" class="inline-block bg-green-500 text-white rounded px-4 py-1.5">
-                                    {{ $video->width }}x{{ $video->height }}
+                                    {{ $video->resolution() }}
                                 </a>
                             </li>
                         @endforeach()
