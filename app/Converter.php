@@ -9,7 +9,7 @@ class Converter
     public const BYTES_IN_KB = 1000;
 
     final public function __construct(
-        protected int | float $subject
+        protected int|float $subject
     ) {
     }
 

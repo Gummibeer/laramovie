@@ -6,8 +6,8 @@ use App\Console\Commands\LoadCollectionsCommand;
 use App\Console\Commands\LoadMoviesCommand;
 use App\Console\Commands\LoadOwnedMoviesCommand;
 use App\Console\Commands\LoadPeopleCommand;
-use App\Console\Commands\LoadPeopleCreditsCommand;
 use App\Console\Commands\LoadTmdbCommand;
+use App\Console\Commands\RecommendMoviesCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -32,6 +32,10 @@ class Kernel extends ConsoleKernel
             ->withoutOverlapping();
 
         $schedule->command(LoadPeopleCommand::class)->daily()
+            ->runInBackground()
+            ->withoutOverlapping();
+
+        $schedule->command(RecommendMoviesCommand::class)->daily()
             ->runInBackground()
             ->withoutOverlapping();
     }

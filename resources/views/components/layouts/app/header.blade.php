@@ -25,6 +25,21 @@
                                             Popular
                                         </strong>
                                     </a>
+                                    <a href="{{ route('app.movie.trending') }}" class="-m-2 p-2 flex items-start rounded-lg hover:bg-gray-50">
+                                        <strong class="text-base font-medium text-gray-900">
+                                            Trending
+                                        </strong>
+                                    </a>
+                                    <a href="{{ route('app.movie.toprated') }}" class="-m-2 p-2 flex items-start rounded-lg hover:bg-gray-50">
+                                        <strong class="text-base font-medium text-gray-900">
+                                            Top-Rated
+                                        </strong>
+                                    </a>
+                                    <a href="{{ route('app.movie.upcoming') }}" class="-m-2 p-2 flex items-start rounded-lg hover:bg-gray-50">
+                                        <strong class="text-base font-medium text-gray-900">
+                                            Upcoming
+                                        </strong>
+                                    </a>
                                     <a href="{{ route('app.movie.recommend') }}" class="-m-2 p-2 flex items-start rounded-lg hover:bg-gray-50">
                                         <strong class="text-base font-medium text-gray-900">
                                             Recommended
@@ -105,9 +120,6 @@
                         x-show="open"
                         x-transition
                     >
-                        <a href="{{ route('app.movie.unmapped') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left" tabindex="-1" role="menuitem">
-                            Unmapped Movies
-                        </a>
                         <form action="{{ route('auth.signout') }}" method="POST" role="menuitem">
                             @csrf
                             <button type="submit" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left" tabindex="-1">

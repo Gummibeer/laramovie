@@ -30,6 +30,7 @@ class OwnedMovie extends Model
 
     public function movie(): BelongsTo
     {
+
         return $this->belongsTo(Movie::class, 'movie_id', 'id');
     }
 
