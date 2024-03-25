@@ -4,7 +4,7 @@
         <div class="grid gap-8 grid-cols-1 md:grid-cols-3 lg:grid-cols-4 rounded">
 
             <div>
-                <x-poster :model="$person" size="780" class="rounded shadow-lg"/>
+                <x-poster :image="$person->profile()" size="780" class="rounded shadow-lg"/>
             </div>
 
             <div class="md:col-span-2 lg:col-span-3">

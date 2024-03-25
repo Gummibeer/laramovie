@@ -38,8 +38,13 @@
                             x-bind:title="movie.name"
                             class="px-4 py-2 flex flex-row items-center space-x-3 hover:bg-gray-100 group"
                         >
-                            <div class="w-8 flex-none">
-                                <x-poster class="rounded" src="" alt="" x-bind:src="movie.poster" x-bind:alt="movie.name"/>
+                            <div class="w-8 flex-none aspect-w-2 aspect-h-3">
+                                <img
+                                    x-bind:src="movie.poster"
+                                    x-bind:alt="movie.name"
+                                    loading="lazy"
+                                    class="rounded w-full h-full object-center object-cover overflow-hidden"
+                                />
                             </div>
                             <div class="flex-shrink">
                                 <p class="text-sm font-medium text-gray-900 group-hover:text-indigo-500 truncate max-w-xs" x-text="movie.name"></p>

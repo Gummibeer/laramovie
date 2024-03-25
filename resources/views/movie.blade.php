@@ -4,7 +4,7 @@
         <div class="grid gap-8 md:grid-cols-3 lg:grid-cols-4">
 
             <div>
-                <x-poster :model="$movie" size="780" class="rounded shadow-lg"/>
+                <x-poster :image="$movie->poster()" size="780" class="rounded shadow-lg"/>
             </div>
 
             <div class="md:col-span-2 lg:col-span-3">

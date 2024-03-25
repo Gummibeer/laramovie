@@ -2,7 +2,7 @@
 
 <article class="flex flex-col bg-white rounded shadow-lg pb-2">
     <a href="{{ route('app.person.show', $credit->person->id) }}" title="{{ $credit->person->name }}">
-        <x-poster :model="$credit->person" class="rounded-t"/>
+        <x-poster :image="$credit->person->profile()" class="rounded-t"/>
     </a>
     <a href="{{ route('app.person.show', $credit->person) }}" class="truncate px-2 font-bold mt-1" title="{{ $credit->person->name }}">
         {{ $credit->person->name }}
