@@ -34,23 +34,6 @@
                             </a>
                         </li>
                         @endif
-                        @unless(false && auth()->user()->hasWatched($movie))
-                        <li>
-                            <form
-                                action="{{ route('api.movie.watch', $movie) }}"
-                                method="PATCH"
-                                x-data
-                                @submit.prevent="fetch($el.getAttribute('action'), {
-                                    method: $el.getAttribute('method'),
-                                    headers: {Accept: 'application/json'}
-                                }).then(() => $el.classList.add('hidden'))"
-                            >
-                                <button type="submit" class="inline-block bg-red-400 text-white rounded px-4 py-1.5">
-                                    watch
-                                </button>
-                            </form>
-                        </li>
-                        @endunless
                         @foreach($movie->videos() as $video)
                             <li>
                                 <a href="{{ $video['link'] }}" target="_blank" class="inline-block bg-green-500 text-white rounded px-4 py-1.5">
