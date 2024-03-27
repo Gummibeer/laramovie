@@ -21,7 +21,7 @@
         <div class="flex justify-between">
             <span>{{ $movie->runtime()?->forHumans(short: true) }}</span>
             <time datetime="{{ $movie->release_date?->toIso8601ZuluString() }}">
-                {{ $movie->release_date?->format('Y') ?? '- }}
+                {{ $movie->release_date?->format('Y') ?? '-' }}
             </time>
         </div>
         @if($movie->vote_average)
