@@ -5,13 +5,24 @@ namespace App\Http\Controllers;
 use App\Models\OwnedMovie;
 use Astrotomic\Tmdb\Models\Movie;
 use Illuminate\Contracts\View\View as ViewContract;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 class MovieController
 {
     public function index(): ViewContract
     {
-        return view('movies');
+        $movies = Movie::query()
+            ->whereIn('id', OwnedMovie::query()->distinct()->pluck('movie_id'))
+            ->get()
+            ->groupBy(fn (Movie $movie): string => Str::firstAlpha($movie->title))
+            ->sortKeys()
+            ->map(fn (Collection $movies) => $movies->sortBy(fn (Movie $movie) => Str::ascii($movie->title))->values());
+
+        return view('movies', [
+            'movies' => $movies,
+        ]);
     }
 
     public function show(Movie $movie): ViewContract

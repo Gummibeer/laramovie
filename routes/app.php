@@ -17,6 +17,5 @@ Route::prefix('movie')->name('movie.')->group(static function (): void {
 });
 
 Route::prefix('person')->name('person.')->group(static function (): void {
-    Route::get('/', [PersonController::class, 'index'])->name('index');
     Route::get('/{person}', [PersonController::class, 'show'])->name('show')->whereNumber('person');
 });

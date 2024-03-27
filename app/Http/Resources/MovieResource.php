@@ -20,7 +20,6 @@ class MovieResource extends JsonResource
                 'runtime' => $this->resource->runtime()?->forHumans(short: true),
                 'vote_average' => number_format($this->resource->vote_average, 1, ','),
             ],
-            'has_been_watched' => false,
         ];
     }
 }

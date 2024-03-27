@@ -54,13 +54,15 @@ class AppServiceProvider extends ServiceProvider
             return Str::of($string)->firstAlpha();
         });
 
-        Stringable::macro('firstAlpha', function () {
+        Stringable::macro('firstAlpha', function (): Stringable {
             /** @var Stringable $this */
             return $this
                 ->ascii()
-                ->substr(0, 1)
+                ->trim()
                 ->lower()
-                ->replaceMatches('/[^a-z]/', '#');
+                ->substr(0, 1)
+                ->replaceMatches('/[^a-z]/', '#')
+                ->whenEmpty(fn () => Str::of('#'));
         });
 
         File::macro('json', function (string $path): array {

@@ -54,8 +54,6 @@ class OwnedMovie extends Model
             ['width' => 854, 'height' => 480, 'label' => '480p'],
             ['width' => 720, 'height' => 576, 'label' => '576p'],
             ['width' => 640, 'height' => 360, 'label' => '360p'],
-            ['width' => 426, 'height' => 240, 'label' => '240p'],
-            ['width' => 320, 'height' => 180, 'label' => '180p'],
         ];
 
         // Iterate through resolutions and find the best match

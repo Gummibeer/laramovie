@@ -49,21 +49,10 @@
                             </div>
                         </div>
                     </div>
-                    <a
-                        href="{{ route('app.person.index') }}"
-                        @class([
-                            'inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium',
-                            'border-indigo-500 text-gray-900' => request()->is('app/person', 'app/person/*'),
-                            'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700' => !request()->is('app/person', 'app/person/*'),
-                        ])
-                    >
-                        <span>People</span>
-                        <aside class="text-gray-400 ml-1">({{ \Astrotomic\Tmdb\Models\Person::count() }})</aside>
-                    </a>
                 </div>
             </div>
             <div class="flex-1 flex items-center justify-center px-2 lg:ml-6 lg:justify-end">
-                <x-layouts.app.search/>
+                {{-- <x-layouts.app.search/> --}}
             </div>
 
             <div class="flex items-center lg:hidden">
@@ -147,17 +136,6 @@
             >
                 <span>Movies</span>
                 <aside class="text-gray-400 ml-1">({{ \App\Models\OwnedMovie::query()->distinct('movie_id')->count() }})</aside>
-            </a>
-            <a
-                href="{{ route('app.person.index') }}"
-                @class([
-                    'flex pl-3 pr-4 py-2 border-l-4 text-base font-medium',
-                    'border-indigo-500 text-gray-900' => request()->is('app/person', 'app/person/*'),
-                    'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700' => !request()->is('app/person', 'app/person/*'),
-                ])
-            >
-                <span>People</span>
-                <aside class="text-gray-400 ml-1">({{ \Astrotomic\Tmdb\Models\Person::count() }})</aside>
             </a>
         </div>
     </div>
