@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\OwnedMovie;
+use Astrotomic\Tmdb\Models\Movie;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
@@ -13,19 +14,28 @@ class RecommendMoviesCommand extends Command
 
     public function handle(): int
     {
-        $bar = $this->output->createProgressBar(OwnedMovie::query()->count());
+        $movies = Movie::query()
+            ->whereIn(
+                'id',
+                OwnedMovie::query()
+                    ->distinct()
+                    ->pluck('movie_id')
+            )
+            ->cursor();
+
+        $bar = $this->output->createProgressBar($movies->count());
         $bar->setFormat('very_verbose');
         $bar->setRedrawFrequency(1);
         $bar->minSecondsBetweenRedraws(0);
         $bar->maxSecondsBetweenRedraws(1);
         $bar->start();
 
-        $recommendations = OwnedMovie::query()
-            ->cursor()
-            ->map(static function (OwnedMovie $movie) use ($bar): Collection {
+        $recommendations = $movies
+            ->map(static function (Movie $movie) use ($bar): Collection {
                 $movies = collect()
-                    ->concat(rescue(fn () => $movie->movie->recommendations(36)) ?? [])
-                    ->concat(rescue(fn () => $movie->movie->collection?->movies) ?? []);
+                    ->concat(rescue(fn () => $movie->recommendations(36)) ?? [])
+                    ->concat(rescue(fn () => $movie->collection?->movies) ?? [])
+                    ->concat(rescue(fn () => $movie->collection?->movies) ?? []);
 
                 $bar->advance();
 
@@ -34,7 +44,7 @@ class RecommendMoviesCommand extends Command
             ->collapse()
             ->countBy('id')
             ->collect()
-            ->reject(fn (int $count, int $id) => OwnedMovie::query()->where('movie_id', $id)->exists())
+            ->except($movies->pluck('id'))
             ->sortDesc()
             ->keys();
 
