@@ -45,6 +45,17 @@
                 </div>
             </div>
 
+            @if($movie->collection)
+                <div class="col-span-full">
+                    <h2 class="text-2xl font-bold mb-4">Collection</h2>
+                    <div class="grid gap-4 sm:gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6">
+                        @foreach($movie->collection->movies as $part)
+                            <x-movie.preview :movie="$part"/>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
+
             @if($movie->recommendations(18)->isNotEmpty())
                 <div class="col-span-full">
                     <h2 class="text-2xl font-bold mb-4">Similar Movies</h2>
