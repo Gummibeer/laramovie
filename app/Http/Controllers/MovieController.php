@@ -78,9 +78,9 @@ class MovieController
     {
         $movies = Movie::query()
             ->where('status', MovieStatus::RELEASED())
-            ->findMany(File::collect(storage_path('app/movies-recommended.json')))
-            ->take(120)
-            ->values();
+            ->whereKey(File::collect(storage_path('app/movies-recommended.json')))
+            ->limit(180)
+            ->get();
 
         return view('recommend', [
             'movies' => $movies,
