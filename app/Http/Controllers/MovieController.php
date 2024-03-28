@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\OwnedMovie;
+use Astrotomic\Tmdb\Enums\MovieStatus;
 use Astrotomic\Tmdb\Models\Movie;
 use Illuminate\Contracts\View\View as ViewContract;
 use Illuminate\Support\Collection;
@@ -75,9 +76,10 @@ class MovieController
 
     public function recommend(): ViewContract
     {
-        $movies = Movie::query()->findMany(
-            ids: File::collect(storage_path('app/movies-recommended.json'))
-        )->take(120);
+        $movies = Movie::query()
+            ->where('status', MovieStatus::RELEASED())
+            ->findMany(File::collect(storage_path('app/movies-recommended.json')))
+            ->take(180);
 
         return view('recommend', [
             'movies' => $movies,
