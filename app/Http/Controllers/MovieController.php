@@ -92,6 +92,7 @@ class MovieController
         $movies = Movie::query()
             ->where('status', MovieStatus::RELEASED())
             ->whereKey(File::collect(storage_path('app/movies-collectable.json')))
+            ->orderBy('collection_id')
             ->get();
 
         return view('collectable', [
