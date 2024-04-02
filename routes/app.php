@@ -14,6 +14,7 @@ Route::prefix('movie')->name('movie.')->group(static function (): void {
     Route::get('/trending', [MovieController::class, 'trending'])->name('trending');
     Route::get('/toprated', [MovieController::class, 'toprated'])->name('toprated');
     Route::get('/upcoming', [MovieController::class, 'upcoming'])->name('upcoming');
+    Route::get('/collectable', [MovieController::class, 'collectable'])->name('collectable');
 });
 
 Route::prefix('person')->name('person.')->group(static function (): void {

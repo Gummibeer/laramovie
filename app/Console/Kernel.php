@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\CollectableMoviesCommand;
 use App\Console\Commands\LoadCollectionsCommand;
 use App\Console\Commands\LoadMoviesCommand;
 use App\Console\Commands\LoadOwnedMoviesCommand;
@@ -36,6 +37,10 @@ class Kernel extends ConsoleKernel
             ->withoutOverlapping();
 
         $schedule->command(RecommendMoviesCommand::class)->daily()
+            ->runInBackground()
+            ->withoutOverlapping();
+
+        $schedule->command(CollectableMoviesCommand::class)->daily()
             ->runInBackground()
             ->withoutOverlapping();
     }

@@ -86,4 +86,16 @@ class MovieController
             'movies' => $movies,
         ]);
     }
+
+    public function collectable(): ViewContract
+    {
+        $movies = Movie::query()
+            ->where('status', MovieStatus::RELEASED())
+            ->whereKey(File::collect(storage_path('app/movies-collectable.json')))
+            ->get();
+
+        return view('collectable', [
+            'movies' => $movies,
+        ]);
+    }
 }
