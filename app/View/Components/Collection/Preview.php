@@ -3,6 +3,7 @@
 namespace App\View\Components\Collection;
 
 use App\Models\OwnedMovie;
+use Astrotomic\Tmdb\Enums\MovieStatus;
 use Astrotomic\Tmdb\Models\Collection;
 use Astrotomic\Tmdb\Models\Movie;
 use Carbon\CarbonInterval;
@@ -27,6 +28,7 @@ class Preview extends Component
                 ->count()
                 /
                 Movie::query()
+                    ->where('status', MovieStatus::RELEASED())
                     ->where('collection_id', $this->collection->id)
                     ->count()
                 * 100
