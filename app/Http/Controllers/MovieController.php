@@ -97,8 +97,20 @@ class MovieController
             ->orderBy('original_title')
             ->get();
 
+        $collections = \Astrotomic\Tmdb\Models\Collection::query()
+            ->whereIn(
+                'id',
+                Movie::query()
+                    ->whereIn('id', OwnedMovie::query()->distinct()->pluck('movie_id'))
+                    ->distinct()
+                    ->pluck('collection_id')
+            )
+            ->get()
+            ->sortBy('name');
+
         return view('collectable', [
             'movies' => $movies,
+            'collections' => $collections,
         ]);
     }
 }
