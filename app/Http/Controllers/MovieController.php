@@ -107,7 +107,7 @@ class MovieController
                     ->pluck('collection_id')
             )
             ->get()
-            ->sortBy(fn (\Astrotomic\Tmdb\Models\Collection $collection) => round(CollectionHelper::make($collection)->percentage()).' // '.$collection->name);
+            ->sortBy(fn (\Astrotomic\Tmdb\Models\Collection $collection) => str_pad(round(CollectionHelper::make($collection)->percentage()), 3, '0', STR_PAD_LEFT).' // '.$collection->name);
 
         $completed = $collections
             ->filter(fn (\Astrotomic\Tmdb\Models\Collection $collection) => CollectionHelper::make($collection)->percentage() >= 100)
