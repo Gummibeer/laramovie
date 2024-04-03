@@ -8,14 +8,5 @@
             {{ $collection->name }}
         </a>
     </div>
-    <div class="relative h-2 w-full bg-gray-700">
-        <div
-            @class([
-                'h-full',
-                'bg-yellow-700' => $percentage < 100,
-                'bg-green-700' => $percentage >= 100,
-            ])
-            style="width: {{ $percentage }}%"
-        ></div>
-    </div>
+    <x-progressbar :current="$helper->ownedMovieCount()" :total="$helper->movieCount()" class="rounded-b"/>
 </article>

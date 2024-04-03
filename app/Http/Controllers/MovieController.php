@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Tmdb\CollectionHelper;
 use App\Models\OwnedMovie;
 use Astrotomic\Tmdb\Enums\MovieStatus;
 use Astrotomic\Tmdb\Models\Movie;
@@ -108,9 +109,18 @@ class MovieController
             ->get()
             ->sortBy('name');
 
+        $completed = $collections
+            ->filter(fn (\Astrotomic\Tmdb\Models\Collection $collection) => CollectionHelper::make($collection)->percentage() >= 100)
+            ->values();
+
         return view('collectable', [
             'movies' => $movies,
             'collections' => $collections,
+            'completed' => $completed,
+            'movieCount' => [
+                'owned' => $collections->sum(fn (\Astrotomic\Tmdb\Models\Collection $collection) => CollectionHelper::make($collection)->ownedMovieCount()),
+                'total' => $collections->sum(fn (\Astrotomic\Tmdb\Models\Collection $collection) => CollectionHelper::make($collection)->movieCount()),
+            ],
         ]);
     }
 }
