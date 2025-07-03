@@ -2,6 +2,7 @@
 
 /** @routePrefix("app.") */
 
+use App\Http\Controllers\FileOffersController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\PersonController;
 use Illuminate\Support\Facades\Route;
@@ -20,3 +21,5 @@ Route::prefix('movie')->name('movie.')->group(static function (): void {
 Route::prefix('person')->name('person.')->group(static function (): void {
     Route::get('/{person}', [PersonController::class, 'show'])->name('show')->whereNumber('person');
 });
+
+Route::get('/file-offers', FileOffersController::class)->middleware('auth')->name('file-offers');

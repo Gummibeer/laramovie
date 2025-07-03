@@ -16,8 +16,7 @@ class EmbySource implements Source
         protected string $baseUrl,
         protected string $apiKey,
         protected string $serverId,
-    ) {
-    }
+    ) {}
 
     public function movies(): Collection
     {

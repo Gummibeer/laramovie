@@ -10,6 +10,5 @@ class MovieTransfer
         public int $tmdbId,
         public int $width,
         public int $height,
-    ) {
-    }
+    ) {}
 }

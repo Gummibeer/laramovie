@@ -9,9 +9,7 @@ use Illuminate\View\Component;
 
 class Preview extends Component
 {
-    public function __construct(protected Collection $collection)
-    {
-    }
+    public function __construct(protected Collection $collection) {}
 
     public function render(): View
     {

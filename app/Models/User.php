@@ -10,8 +10,6 @@ use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Http;
 
 /**
- * App\Models\User.
- *
  * @property int $id
  * @property string $slug
  * @property string $nickname
@@ -19,14 +17,7 @@ use Illuminate\Support\Facades\Http;
  * @property string|null $trakt_token
  * @property string|null $avatar
  * @property string|null $remember_token
- *
- * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|User query()
- *
- * @mixin \Illuminate\Database\Eloquent\Builder
- *
- * @property array $watched_movie_ids
+ * @property mixed $watched_movie_ids
  */
 class User extends Model implements AuthenticatableContract, AuthorizableContract
 {

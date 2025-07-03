@@ -7,21 +7,27 @@
     "require": {
         "php": "^8.0",
         "ext-fileinfo": "*",
+        "ext-pdo": "*",
         "astrotomic/laravel-tmdb": "dev-main",
-        "fruitcake/laravel-cors": "^2.2",
-        "guzzlehttp/guzzle": "^7.8.0",
-        "laravel/framework": "^8.83.27",
+        "guzzlehttp/guzzle": "^7.9.3",
+        "laravel/framework": "^10.48.29",
+        "laravel/nova": "4.35.4",
         "loilo/fuse": "^6.6.5",
         "socialiteproviders/trakt": "^4.1",
-        "tightenco/ziggy": "^1.8.1"
+        "tightenco/ziggy": "^1.8.2"
     },
     "require-dev": {
-        "barryvdh/laravel-ide-helper": "^2.13",
-        "facade/ignition": "^2.17.7",
-        "laravel/pint": "^1.13.6",
-        "nunomaduro/collision": "^5.11",
-        "spatie/laravel-ray": "^1.33"
+        "barryvdh/laravel-ide-helper": "^2.15.1",
+        "laravel/pint": "^1.22.1",
+        "nunomaduro/collision": "^6.4",
+        "spatie/laravel-ray": "^1.40.2"
     },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://nova.laravel.com"
+        }
+    ],
     "minimum-stability": "dev",
     "prefer-stable": true,
     "autoload": {
@@ -53,7 +59,6 @@
             "@php artisan vendor:publish --tag=laravel-assets --ansi"
         ],
         "post-autoload-dump": [
-            "@composer validate --strict --ansi --no-interaction",
             "@composer normalize --ansi --no-interaction --quiet",
             "@composer thanks --ansi --no-interaction --quiet",
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",

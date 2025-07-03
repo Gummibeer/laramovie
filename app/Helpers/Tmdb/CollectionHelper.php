@@ -18,8 +18,7 @@ class CollectionHelper
 
     public function __construct(
         protected Collection $collection
-    ) {
-    }
+    ) {}
 
     public function ownedMovieCount(): int
     {

@@ -12,11 +12,11 @@ abstract class Model extends \Illuminate\Database\Eloquent\Model
 
     public static function table(): string
     {
-        return (new static())->getTable();
+        return (new static)->getTable();
     }
 
     public static function qualifiedColumn(string $column): string
     {
-        return (new static())->qualifyColumn($column);
+        return (new static)->qualifyColumn($column);
     }
 }

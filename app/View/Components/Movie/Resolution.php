@@ -11,9 +11,7 @@ use Illuminate\View\Component;
 
 class Resolution extends Component
 {
-    public function __construct(protected Movie $movie)
-    {
-    }
+    public function __construct(protected Movie $movie) {}
 
     public function render(): View
     {

@@ -10,8 +10,7 @@ class Progressbar extends Component
     public function __construct(
         protected float $current,
         protected float $total,
-    ) {
-    }
+    ) {}
 
     public function render(): View
     {

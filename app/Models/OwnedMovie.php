@@ -8,8 +8,6 @@ use Astrotomic\Tmdb\Models\Movie;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * App\Models\OwnedMovie.
- *
  * @property int $id
  * @property int $movie_id
  * @property string $source
@@ -17,12 +15,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $width
  * @property int $height
  * @property-read Movie $movie
- *
- * @method static \Illuminate\Database\Eloquent\Builder|OwnedMovie newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|OwnedMovie newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|OwnedMovie query()
- *
- * @mixin \Illuminate\Database\Eloquent\Builder
  */
 class OwnedMovie extends Model
 {
