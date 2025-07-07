@@ -4,17 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Models\DownloadedFile;
 use App\Models\FileOffer;
+use App\Models\OwnedMovie;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Fluent;
 
 class FileOffersController
 {
     public function __invoke(Request $request): Response|JsonResponse
     {
         $format = $request->query('format', 'irc');
+        $filters = new Fluent($request->input('filters', []));
 
         $query = FileOffer::query()
             ->select('*')
@@ -55,13 +59,20 @@ class FileOffersController
             ])
             // already downloaded
             ->whereNotIn('file_name', DownloadedFile::query()->select('file_name'))
+            ->when(
+                $filters->get('owned'),
+                fn (Builder $q) => $q->where(function (Builder $query): void {
+                    $query->orWhereNull('tmdb_id');
+                    $query->orWhereNotIn('tmdb_id', OwnedMovie::query()->select('movie_id'));
+                })
+            )
             ->whereNot('user', 'ILIKE', '%beast%')
             ->orderBy('bytes');
 
         $query->addSelect(DB::raw('CONCAT(\'/MSG \', "user", \' XDCC SEND \', file_id) as command'));
 
         return match ($format) {
-            'json' => response()->json($query->get()->map(fn(FileOffer $offer) => Arr::only($offer->toArray(), ['file_name', 'bytes', 'command']))),
+            'json' => response()->json($query->get()->map(fn (FileOffer $offer) => Arr::only($offer->toArray(), ['file_name', 'bytes', 'command']))),
             'irc' => response($query->pluck('command')->implode(PHP_EOL), 200, [
                 'Content-Type' => 'text/plain',
             ])
