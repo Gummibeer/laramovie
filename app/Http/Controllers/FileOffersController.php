@@ -63,7 +63,7 @@ class FileOffersController
                 $filters->get('owned'),
                 fn (Builder $q) => $q->where(function (Builder $query): void {
                     $query->orWhereNull('tmdb_id');
-                    $query->orWhereNotIn('tmdb_id', OwnedMovie::query()->select('movie_id'));
+                    $query->orWhereNotIn('tmdb_id', OwnedMovie::query()->distinct()->pluck('movie_id'));
                 })
             )
             ->whereNot('user', 'ILIKE', '%beast%')
