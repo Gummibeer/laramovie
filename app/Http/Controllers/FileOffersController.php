@@ -66,6 +66,14 @@ class FileOffersController
                     $query->orWhereNotIn('tmdb_id', OwnedMovie::query()->distinct()->pluck('movie_id'));
                 })
             )
+            ->when(
+                $filters->get('ignore'),
+                function (Builder $q, array $ignore): void {
+                    foreach ($ignore as $user) {
+                        $q->whereNot('user', 'ILIKE', '%'.$user.'%');
+                    }
+                }
+            )
             ->whereNot('user', 'ILIKE', '%beast%')
             ->orderBy('bytes');
 
