@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\FileSize;
 use App\Models\DownloadedFile;
 use App\Models\FileOffer;
 use App\Models\OwnedMovie;
@@ -72,6 +73,12 @@ class FileOffersController
                     foreach ($ignore as $user) {
                         $q->whereNot('user', 'ILIKE', '%'.$user.'%');
                     }
+                }
+            )
+            ->when(
+                $filters->get('size'),
+                function (Builder $q, string $size): void {
+                    $q->where('bytes', '<=', FileSize::parse($size)->toBytes());
                 }
             )
             ->whereNot('user', 'ILIKE', '%beast%')
