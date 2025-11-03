@@ -76,6 +76,12 @@ class FileOffersController
                 }
             )
             ->when(
+                $filters->get('name'),
+                function (Builder $q, string $name): void {
+                    $q->where('file_name', 'ILIKE', '%'.$name.'%');
+                }
+            )
+            ->when(
                 $filters->get('size'),
                 function (Builder $q, string $size): void {
                     $q->where('bytes', '<=', FileSize::parse($size)->toBytes());
