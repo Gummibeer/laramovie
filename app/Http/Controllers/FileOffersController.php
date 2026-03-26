@@ -90,7 +90,9 @@ class FileOffersController
             ->when(
                 $filters->get('movie'),
                 function (Builder $q): void {
-                    $q->whereNull('season')->whereNull('episode');
+                    $q->whereNull('season');
+                    $q->whereNull('episode');
+                    $q->where('tmdb_type', 'movie');
                 }
             )
             ->whereNot('user', 'ILIKE', '%beast%')
