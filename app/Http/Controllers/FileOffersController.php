@@ -87,6 +87,12 @@ class FileOffersController
                     $q->where('bytes', '<=', FileSize::parse($size)->toBytes());
                 }
             )
+            ->when(
+                $filters->get('movie'),
+                function (Builder $q): void {
+                    $q->whereNull('season')->whereNull('episode');
+                }
+            )
             ->whereNot('user', 'ILIKE', '%beast%')
             ->orderBy('bytes');
 
