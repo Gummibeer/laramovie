@@ -42,6 +42,11 @@ class FileOffersController
             ->whereNot('file_name', 'ILIKE', '%Spreewaldklinik%')
             ->whereNot('file_name', 'ILIKE', '%Das.Traumschiff%')
             ->whereNot('file_name', 'ILIKE', '%Der.Koenig.von.Palma%')
+            ->whereNot('file_name', 'ILIKE', '%Schlag.den.Raab%')
+            ->whereNot('file_name', 'ILIKE', '%Das.Sommerhaus.der.Stars%')
+            ->whereNot('file_name', 'ILIKE', '%Achtung.Abzocke%')
+            ->whereNot('file_name', 'ILIKE', '%Villa.der.Versuchung%')
+            ->whereNot('file_name', 'ILIKE', '%Ex.on.the.Beach%')
             // bad magazines
             ->whereNot('file_name', 'ILIKE', '%BILD.Zeitung%')
             ->whereNot('file_name', 'ILIKE', '%BILD.am.Sonntag%')
